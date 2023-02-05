@@ -2,12 +2,28 @@
 
     /**  user registration 
      *      - use email and password to register/sign-up
-     */
+     *  
+     * 
+     * Done here
+     */ 
 
+    
 
     /**  user authentication for log-in
      *      - it will generate the token to postman
+     *  
      * 
+     * Done here
+     */ 
+
+    /** create poduct (Admin only)
+            product = {
+                productName: 'Jordan1',
+                productDescription:' description of product',
+                category:'Shoes',
+                isActive:true, default
+                price: 3000
+            }
      */
 
 
@@ -22,15 +38,7 @@
 
 
 
-    /** create poduct (Admin only)
-            product = {
-                productName: 'Jordan1',
-                productDescription:' description of product',
-                category:'Shoes',
-                isActive:true, default
-                price: 3000
-            }
-     */
+    
 
 
     /* Retrieve all active products
@@ -66,4 +74,7 @@
     
 
 
-   
+   /*  add product to cart
+            - use PUT method to edit user profile info
+            
+   */

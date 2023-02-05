@@ -9,6 +9,13 @@ const port = 4001;
 const app = express(); 
 
 
+// =================== imported routes ====================
+const userRoutes = require('./Routes/userRoutes.js')
+// =================== end of imported routes ====================
+
+
+
+
 // [Mongoose] DeprecationWarning: Mongoose: the `strictQuery` option will be switched back [solved]
 mongoose.set('strictQuery', true);
 
@@ -30,6 +37,11 @@ db.once("open", ()=>console.log(`We're connected to the database cloud!`));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
+
+
+
+// request routes
+app.use("/user", userRoutes)
 
 // listen app
 app.listen(port, ()=> console.log(`Server is running at server: ${port}`))

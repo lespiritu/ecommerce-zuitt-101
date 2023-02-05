@@ -43,12 +43,12 @@ module.exports.verify = (request, response, next) =>{
     let token = request.headers.authorization;
     
     //Token recieved and is not undefined.
-    console.log(token);
+    // console.log(token);
     
     if(typeof token !== "undefined"){
     // Retrives only token and removes the "Bearer" prefix
         token = token.slice(7,token.length )
-        console.log(token);
+        // console.log(token);
     
         return jwt.verify(token, secret, (error, data)=>{
             if(error){

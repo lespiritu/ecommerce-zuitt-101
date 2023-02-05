@@ -24,7 +24,55 @@
                 isActive:true, default
                 price: 3000
             }
-     */
+
+            Done here
+     */ 
+
+
+
+            
+
+        /* Retrieve all active products
+
+            Product.find({})
+                .then(result => {
+                if(result.isAdmin){
+                 response.send(result)
+                }
+            })
+            Done here
+    */
+
+
+    /*  get single product
+            - findById - used the id of the product
+            - sample route in postman localhost/4000/product/42338
+
+            - sample code in route.js router.get('/getProduct/:id', productController.getProduct)
+            - sample code - Product.findById(request.params.id)
+
+            Done here
+    */
+
+
+
+            /* update product information - admin only
+                - authenticate by token
+                - sample route in postman localhost/4000/product/42338
+                - findByIdAndUpdate(request.params.id)
+                - sample code in route.js router.get('/getProduct/:id', productController.getProduct)
+                
+                Done here
+
+            */
+
+
+
+
+
+
+
+
 
 
     /** Retrieve User details
@@ -38,40 +86,6 @@
 
 
 
-    
-
-
-    /* Retrieve all active products
-
-            Product.find({})
-            .then(result => {
-                if(result.isAdmin){
-                    response.send(result)
-                }
-            })
-    */
-
-
-    /*  get single product
-            - findById - used the id of the product
-            - sample route in postman localhost/4000/product/42338
-
-            - sample code in route.js router.get('/getProduct/:id', productController.getProduct)
-            - sample code - Product.findById(request.params.id)
-    */
-
-
-
-    /* update product information - admin only
-            - authenticate by token
-            - sample route in postman localhost/4000/product/42338
-            - findByIdAndUpdate(request.params.id)
-            - sample code in route.js router.get('/getProduct/:id', productController.getProduct)
-     
-     */
-
-
-    
 
 
    /*  add product to cart

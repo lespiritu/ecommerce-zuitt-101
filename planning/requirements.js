@@ -75,14 +75,14 @@
 
 
 
-    /** Retrieve User details
+    /** Retrieve User details with orders of users
      *  - used authentication token to get the details of user
      *  
-     *  - to get the orders
-     *      - used authentication token to get the orders by _id or user
-     *      - find({userId:authUserId}) // this will get array of object for orders
-     *      - then assign user.order to the result if its not null.
+
+
+
      */
+
 
 
 
@@ -92,3 +92,9 @@
             - use PUT method to edit user profile info
             
    */
+
+
+
+    /*
+            create order
+    */

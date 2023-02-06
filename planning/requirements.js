@@ -80,7 +80,7 @@
      *  
 
 
-
+            Done here
      */
 
 
@@ -90,11 +90,29 @@
 
    /*  add product to cart
             - use PUT method to edit user profile info
-            
+            Done here
    */
 
 
 
+
+
     /*
-            create order
+            - create order from productId and from cart
+            - update product quantity and amount
+            - delete cart after order
+            - show order
+            - update order status to recieved
+            - show order history
+
+            - show all orders admin only
+            - show all active orders admin only
+            - show all recieved orders admin only
+
+            - show total sales admin only
+
+            - add feedback and stars
+            
+
+
     */

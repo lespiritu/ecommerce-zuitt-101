@@ -101,18 +101,23 @@
       Done  - create order from cart
       Done  - update product quantity and amount
       Done  - delete cart after order
+      Done  - create order from productId
 
+      Done  - show orders - user
+      Done  - show single order - user
 
-            - create order from productId
-            - show order
-            - update order status to recieved
-            - show order history
-            - add feedback and stars
+      Done  - update order status to recieved - user
+      Done  - show order history - user
+
+            
+           
 
             - show all orders admin only
             - show all active orders admin only
             - show all recieved orders admin only
+
             - show total sales admin only
+            - add feedback and stars
 
             
             

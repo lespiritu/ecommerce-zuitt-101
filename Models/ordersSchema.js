@@ -42,7 +42,7 @@ const orderSchema = new mongoose.Schema(
 
         orderStatus:{
             type:String,
-            default:"On Going"
+            default:"on going"
         },
         OrderDate: {
             type:Date,

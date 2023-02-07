@@ -116,7 +116,9 @@
       Done  - show all active orders admin only
       Done  - show all recieved orders admin only
 
-            - show total sales admin only
+      Done  - show total sales admin only
+
+      
             - add feedback and stars
 
             

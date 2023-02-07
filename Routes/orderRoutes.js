@@ -9,6 +9,8 @@ const { updateOrderToComplete } = require('../Controllers/order-controllers/upda
 const { showCompleteOrder } = require('../Controllers/order-controllers/shwCompletedOrders.js');
 const showOrdersAdmin = require('../Controllers/order-controllers/showOrdersAdmin.js');
 
+const { ShowTotalSale } =require('../Controllers/order-controllers/showTotalSale.js');
+
 router.post('/createOrder/:cartId', auth.verify, createOrderFromCart);
 router.post('/createOrderProduct/:productId', auth.verify, createOrderFromProduct);
 router.get('/onGoingOrders', auth.verify, showOrder.showOnGoingOrders);
@@ -19,4 +21,5 @@ router.get('/showOrdersAdmin/all', auth.verify, showOrdersAdmin.showOrdersAdmin)
 router.get('/showOrdersAdmin/completed', auth.verify, showOrdersAdmin.showOrdersCompleted);
 router.get('/showOrdersAdmin/onGoing', auth.verify, showOrdersAdmin.showOnGoingOrdersAdmin);
 
+router.get('/getSalesData', auth.verify, ShowTotalSale )
 module.exports = router;

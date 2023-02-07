@@ -13,6 +13,7 @@ const app = express();
 const userRoutes = require('./Routes/userRoutes.js');
 const productRoutes = require('./Routes/productRoutes.js');
 const cartRoutes = require('./Routes/cartRoutes.js');
+const orderRountes = require('./Routes/orderRoutes.js');
 
 // =================== end of imported routes ====================
 
@@ -46,7 +47,8 @@ app.use(cors());
 // request routes
 app.use("/user", userRoutes);
 app.use("/product", productRoutes);
-app.use("/cart", cartRoutes)
+app.use("/cart", cartRoutes);
+app.use("/order", orderRountes)
 
 // listen app
 app.listen(port, ()=> console.log(`Server is running at server: ${port}`))

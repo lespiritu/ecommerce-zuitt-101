@@ -21,38 +21,55 @@ module.exports.createOrder = (request, response)=>{
             
             else{   
 
+                  Product.findById(data.productId)
+                  .then( result => {
+                    if (result.stocks >= data.quantity){
+                        
+
+                        let newOrder = new Order(
+                            {
+                                userId: data.userId,
+                                userEmail: data.userEmail,
+                
+                                productId: data.productId,
+                                productName: data.productName,
+                                productDescription: data.productDescription,
+                                price: data.price,
+                                quantity: data.quantity,
+                                totalAmount:data.totalAmount
+                            }
+                        );
+                        
+                        //This will delete the data from a cart.
+                        data.delete()
+        
+                        .then( ()=> {
+        
+                            // This will save new Order to the orders collection
+                            newOrder.save()
+                            .then(saveData => response.send(`${saveData.productName} is now on going process. Thank you for your order!`))
+                            .catch(error => response.send(error))
+                        }
+                        )
+                        .catch(error => response.send(error))
+
+                    }
+                    else {
+                        response.send(`We don't have enough stock for your order. Our stocks is:${result.stocks} and your order is:${data.quantity}`)
+                    }
+                    
+        
+                  })
+                  .catch(error => response.send(error));
+
+
+
                   
 
-
-                let newOrder = new Order(
-                    {
-                        userId: data.userId,
-                        userEmail: data.userEmail,
-        
-                        productId: data.productId,
-                        productName: data.productName,
-                        productDescription: data.productDescription,
-                        price: data.price,
-                        quantity: data.quantity,
-                        totalAmount:data.totalAmount
-                    }
-                );
                 
-                //This will delete the data from a cart.
-                data.delete()
-
-                .then( ()=> {
-
-                    // This will save new Order to the orders collection
-                    newOrder.save()
-                    .then(saveData => response.send(`${saveData.productName} is now on going process. Thank you for your order!`))
-                    .catch(error => response.send(error))
-                }
-                )
-                .catch(error => response.send(error))
                 
                
-            }
+                }
         })
         .catch(error => response.send(error));
 

@@ -98,12 +98,14 @@
 
 
     /*
-            - create order from productId and from cart
-            - update product quantity and amount
-            - delete cart after order
+      Done  - create order from productId and from cart
+      Done  - update product quantity and amount
+      Done  - delete cart after order
+
             - show order
             - update order status to recieved
             - show order history
+
 
             - show all orders admin only
             - show all active orders admin only

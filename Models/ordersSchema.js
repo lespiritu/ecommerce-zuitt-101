@@ -38,6 +38,15 @@ const orderSchema = new mongoose.Schema(
         totalAmount:{
             type:Number,
             required:[true, 'total price is required!']
+        },
+
+        orderStatus:{
+            type:String,
+            default:"On Going"
+        },
+        OrderDate: {
+            type:Date,
+            default: new Date()
         }
     }
 )

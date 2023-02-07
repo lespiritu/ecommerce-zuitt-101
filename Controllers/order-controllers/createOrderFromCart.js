@@ -3,7 +3,7 @@ const Cart = require('../../Models/cartsSchema.js');
 const auth = require('../../auth.js');
 const Product = require('../../Models/productsSchema.js');
 
-module.exports.createOrder = (request, response)=>{
+module.exports.createOrderFromCart = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
     const cartId = request.params.cartId;
 

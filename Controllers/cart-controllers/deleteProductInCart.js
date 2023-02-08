@@ -10,8 +10,22 @@ module.exports.deleteProductInCart = (request, response)=>{
         response.send("This page is restricted for user only. Admin doesn't have an access!")
     }
     else{
-        Cart.findByIdAndDelete(cartId)
-        .then(result => response.send(result))
+        Cart.findById(cartId)
+        .then(result => {
+            if (result === null){
+                response.send("Invalid Cart ID")
+            }
+            else{
+                if(result.userId === userData._id){
+                    result.delete()
+                    .then( ()=> response.send(`${result} \n - is now deleted on your cart`))
+                    .catch(error => response.send(error))
+                }
+                else{
+                    response.send("You don't have permission on this page!")
+                }
+            }
+        })
         .catch(error => response.send(error))
     }
 }

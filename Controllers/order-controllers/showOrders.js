@@ -1,6 +1,7 @@
 const auth = require('../../auth.js');
 const Order = require('../../Models/ordersSchema.js');
 
+// show  all on going orders from user
 module.exports.showOnGoingOrders = (request, response)=>{
 
     const userData = auth.decode(request.headers.authorization);
@@ -16,7 +17,7 @@ module.exports.showOnGoingOrders = (request, response)=>{
 }
 
 
-
+// show single order from user
 module.exports.showSingleOrder = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
     const orderId = request.params.orderId;
@@ -44,3 +45,5 @@ module.exports.showSingleOrder = (request, response)=>{
         .catch(error => response.send(error))
     }
 }
+
+

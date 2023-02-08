@@ -20,7 +20,12 @@ module.exports.createOrderFromCart = (request, response)=>{
 
             
             else{   
-                  Product.findById(data.productId)
+
+                if(data.userId !== userData._id){
+                    response.send("You don't have permission to this page!")
+                }
+                else{
+                    Product.findById(data.productId)
                     .then( result => {
                         if (result.stocks >= data.quantity){
                             
@@ -64,8 +69,10 @@ module.exports.createOrderFromCart = (request, response)=>{
             
                     })
                     .catch(error => response.send(error));
-
                 }
+                  
+
+            }
         })
         .catch(error => response.send(error));
 

@@ -20,6 +20,7 @@ router.get('/showCompletedOrders', auth.verify, showCompleteOrder);
 router.get('/showOrdersAdmin/all', auth.verify, showOrdersAdmin.showOrdersAdmin);
 router.get('/showOrdersAdmin/completed', auth.verify, showOrdersAdmin.showOrdersCompleted);
 router.get('/showOrdersAdmin/onGoing', auth.verify, showOrdersAdmin.showOnGoingOrdersAdmin);
+router.get('/showOrdersAdmin/singleOrder/:orderId', auth.verify, showOrdersAdmin.showSingleOrderAdmin);
 
 router.get('/getSalesData', auth.verify, ShowTotalSale )
 module.exports = router;

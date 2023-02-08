@@ -10,15 +10,26 @@ module.exports.updateOrderToComplete = (request, response)=>{
         response.send("This page is restricted for user only. Admin doesn't have an access!");
     }
     else{
-        Order.findByIdAndUpdate(orderId, {orderStatus:"recieved"}, {new:true})
+        Order.findById(orderId)
         .then(data => {
             if (data === null){
                 response.send("Invalid Order ID")
             }
             else{
-                response.send(`OrderNo: ${data._id} is now recieved and completed. Thank you!`)
+                if(data.userId === userData._id){
+
+                    data.orderStatus = "recieved";
+                    data.save()
+                    .then( ()=> response.send(`OrderNo: ${data._id} is now recieved and completed. Thank you!`) )
+                    .catch(error => response.send(error))
+                }
+                else{
+                    response.send("You don't have permission to this page!")
+                }
+                
             }
         })
         .catch(error => response.send(error))
     }
 }
+

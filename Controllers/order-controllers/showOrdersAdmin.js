@@ -47,3 +47,28 @@ module.exports.showOnGoingOrdersAdmin = (request, response)=>{
         .catch(error => response.send(error))
     }
 }
+
+
+
+
+// show single order admin only
+module.exports.showSingleOrderAdmin = (request, response)=>{
+    const userData = auth.decode(request.headers.authorization);
+    const orderId = request.params.orderId;
+
+    if(!userData.isAdmin){
+        response.send("You don't have access to this page!");
+    }
+    else{
+        Order.findById(orderId)
+        .then( data => {
+            if (data === null){
+                response.send("Invalid Order ID")
+            }
+            else{
+                response.send(data)
+            }
+        })
+        .catch(error => response.send(error))
+    }
+}   

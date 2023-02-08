@@ -1,64 +1,113 @@
 
 
-// going to users collection
-user = {
-      email:String,
-      password:String,
-      isAdmin:Boolean, // default false
+// // going to users collection
+// user = {
+//       email:String,
+//       password:String,
+//       isAdmin:Boolean, // default false
 
-      // This will display ongoing orders
-      orders: [
-            {     _id: String, // This will be the order number
-                  products:[ {productName:String, quantity:Number, price:Number}],
-                  totalAmount:Number,
-                  purchasedOn: Data - new Date(),
-                  status:String // recieved or onGoing default to onGoing
-            },
-            {
-                  _id: String, // This will be the order number
-                  products:[ {productName:String, quantity:Number, price:Number}],
-                  totalAmount:Number,
-                  purchasedOn: Data - new Date(),
-                  status:String // recieved or onGoing default to onGoing 
-            }
-      ],
+//       // This will display ongoing orders
+//       orders: [
+//             {     _id: String, // This will be the order number
+//                   products:[ {productName:String, quantity:Number, price:Number}],
+//                   totalAmount:Number,
+//                   purchasedOn: Data - new Date(),
+//                   status:String // recieved or onGoing default to onGoing
+//             },
+//             {
+//                   _id: String, // This will be the order number
+//                   products:[ {productName:String, quantity:Number, price:Number}],
+//                   totalAmount:Number,
+//                   purchasedOn: Data - new Date(),
+//                   status:String // recieved or onGoing default to onGoing 
+//             }
+//       ],
 
-      cart:[
-            { productName:String, quantity:Number,price:Number },
-            { productName:String, quantity:Number,price:Number }
-      ]
-
-
-}
+//       cart:[
+//             { productName:String, quantity:Number,price:Number },
+//             { productName:String, quantity:Number,price:Number }
+//       ]
 
 
-// Going to products collection
-product = {
-      productName: 'Jordan1',
-      productDescription:' description of product',
-      category:'Shoes',
-      isActive:true,
-      price: 3000
-}
+// }
 
 
+// // Going to products collection
+// product = {
+//       productName: 'Jordan1',
+//       productDescription:' description of product',
+//       category:'Shoes',
+//       isActive:true,
+//       price: 3000
+// }
 
 
 
-// going to orders collection
 
-order = {
-      userId:String, // This will send the user ID after order
 
-      _id: String, // This will be the order number
-      products:[ 
-            {productName:String, quantity:Number, price:Number},
-            {productName:String, quantity:Number, price:Number},
-            {productName:String, quantity:Number, price:Number}
-      ],
+// // going to orders collection
 
-      totalAmount:Number,
-      purchasedOn: Data - new Date(),
-      status:String // recieved or onGoing default to onGoing 
+// order = {
+//       userId:String, // This will send the user ID after order
+
+//       _id: String, // This will be the order number
+//       products:[ 
+//             {productName:String, quantity:Number, price:Number},
+//             {productName:String, quantity:Number, price:Number},
+//             {productName:String, quantity:Number, price:Number}
+//       ],
+
+//       totalAmount:Number,
+//       purchasedOn: Data - new Date(),
+//       status:String // recieved or onGoing default to onGoing 
       
-}
+// }
+
+
+
+
+// This is the sample data
+// const user = {
+//       email,
+//       password,
+//       isAdmin
+// }
+
+
+// const product = {
+//       producName,
+//       productDescription,
+//       category,
+//       isActive,
+//       price,
+//       stocks,
+//       ratings:[ {rating, feedBack, userAccount}]
+
+// }
+
+
+// const cart = {
+//       userId,
+//       userEmail,
+//       productId,
+//       producName,
+//       productDescription,
+//       quantity,
+//       price,
+//       totalAmount
+// }
+
+// const order = {
+//       userId,
+//       userEmail,
+//       productId,
+//       producName,
+//       productDescription,
+//       quantity,
+//       price,
+//       totalAmount,
+//       orderStatus,
+//       isRated
+// }
+
+

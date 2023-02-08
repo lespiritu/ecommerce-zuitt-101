@@ -118,7 +118,7 @@
 
       Done  - show total sales admin only
 
-      
+            - debug for same user
             - add feedback and stars
 
             

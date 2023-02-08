@@ -21,9 +21,26 @@ module.exports.showSingleOrder = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
     const orderId = request.params.orderId;
 
-   
+    if(userData.isAdmin){
+        response.send("This page is restricted for user only. Admin doesn't have an access!");
+    }
+    else{
+        
         Order.findById(orderId)
-        .then( data => data === null? response.send("Invalid Order ID!") : response.send(data))
+        .then( data => {
+            if(data === null) {
+                response.send("Invalid Order ID!")
+            }
+            else{
+                if(data.userId === userData._id){
+                    response.send(data)
+                }
+                else{
+                    response.send("You don't have permission to this page!")
+                }
+                
+            } 
+        })
         .catch(error => response.send(error))
-       
+    }
 }

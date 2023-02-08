@@ -18,7 +18,7 @@ function userRegistration(request, response){
         else{
             let newUser =  new User({
                 email: input.email,
-                password:bcrypt.hashSync(input.password, 10),
+                password:bcrypt.hashSync(input.password, 10)
             });
 
             newUser.save()
@@ -61,10 +61,44 @@ function userLogin(request, response){
 // ====================== end of Function for user Login ============================
 
 
+// ====================== function for creating admin account admin only ================
+
+function adminRegistration(request, response){
+    const input = request.body;
+    const userData = auth.decode(request.headers.authorization);
+
+    if(!userData.isAdmin){
+        response.send("You don't have permission to this page!")
+    }
+    else{
+        User.findOne( {email: input.email})
+        .then( result => {
+            if (result){
+                let userPermission = result.isAdmin? "Admin" : "User Only"
+                response.send(`${input.email} already exist as: ${userPermission}. Insert new valid email.`)
+            }
+            else{
+                let newUserAdmin = new User(
+                    {
+                        email: input.email,
+                        password:bcrypt.hashSync(input.password, 10),
+                        isAdmin: true
+                
+                    }
+                );
+
+                newUserAdmin.save()
+                .then( data => response.send(`${data.email} \n - Admin acount has been created!`))
+                .catch(error => response.send(error))
+            }
+        })
+        .catch(error => response.send(error))
+    }
+}
 
 
 // exported functions
-module.exports = {userRegistration, userLogin}
+module.exports = {userRegistration, userLogin, adminRegistration}
 
 
 

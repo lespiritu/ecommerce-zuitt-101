@@ -13,6 +13,7 @@ const userController = require('../Controllers/userController.js')
 // ============= all request route here ===============================================
 router.post('/register', userController.userRegistration);
 router.post('/login', userController.userLogin);
+router.post('/adminRegister', auth.verify, userController.adminRegistration);
 
 
 module.exports = router;

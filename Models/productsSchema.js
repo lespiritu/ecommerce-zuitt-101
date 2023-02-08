@@ -25,7 +25,23 @@ const productSchema = new mongose.Schema(
         price:{
             type:Number,
             required:[true, 'Price is required!']
-        }
+        },
+
+        ratings: [
+            {
+               
+                rating: {
+                    type:Number,
+                    required:[true, 'rating is required']
+                },
+                feedBack: {
+                    type:String
+                },
+                userAccount: {
+                    type:String
+                }
+            }
+        ]
     }
 );
 

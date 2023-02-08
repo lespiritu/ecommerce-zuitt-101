@@ -47,6 +47,11 @@ const orderSchema = new mongoose.Schema(
         OrderDate: {
             type:Date,
             default: new Date()
+        },
+
+        isRated:{
+            type:Boolean,
+            default:false
         }
     }
 )

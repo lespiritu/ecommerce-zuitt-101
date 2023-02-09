@@ -16,16 +16,23 @@ module.exports.updateOrderToComplete = (request, response)=>{
                 response.send("Invalid Order ID")
             }
             else{
-                if(data.userId === userData._id){
 
-                    data.orderStatus = "recieved";
-                    data.save()
-                    .then( ()=> response.send(`OrderNo: ${data._id} is now recieved and completed. Thank you!`) )
-                    .catch(error => response.send(error))
+                if(data.orderStatus === "recieved"){
+                    return response.send("This product is already recieved")
                 }
                 else{
-                    response.send("You don't have permission to this page!")
+                    if(data.userId === userData._id){
+
+                        data.orderStatus = "recieved";
+                        data.save()
+                        .then( ()=> response.send(`OrderNo: ${data._id} is now recieved and completed. Thank you!`) )
+                        .catch(error => response.send(error))
+                    }
+                    else{
+                        response.send("You don't have permission to this page!")
+                    }
                 }
+                
                 
             }
         })

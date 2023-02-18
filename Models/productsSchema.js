@@ -26,6 +26,7 @@ const productSchema = new mongose.Schema(
             type:Number,
             required:[true, 'Price is required!']
         },
+        images:[],
 
         ratings: [
             {

@@ -7,25 +7,46 @@ module.exports.deleteProductInCart = (request, response)=>{
     const cartId = request.params.cartId;
 
     if(userData.isAdmin){
-        response.send("This page is restricted for user only. Admin doesn't have an access!")
+        response.send({
+            "status":"failed",
+            "message":"You don't have access on this page!"
+        })
     }
     else{
         Cart.findById(cartId)
         .then(result => {
             if (result === null){
-                response.send("Invalid Cart ID")
+                response.send({
+                    "status":"failed",
+                     "message":"Invalid Cart ID!"
+                })
             }
             else{
                 if(result.userId === userData._id){
                     result.delete()
-                    .then( ()=> response.send(`${result} \n - is now deleted on your cart`))
-                    .catch(error => response.send(error))
+                    .then( data => response.send({
+                        "status":"success",
+                        "message":"Product has beed deleted on the your cart!",
+                        data
+                    }))
+                    .catch(error => response.send({
+                        "status":"failed",
+                        "message":"Error during deleting item!",
+                        error
+                    }))
                 }
                 else{
-                    response.send("You don't have permission on this page!")
+                    response.send({
+                        "status":"failed",
+                        "message":"You can't delete item on another user's cart!",
+                    })
                 }
             }
         })
-        .catch(error => response.send(error))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error during accessing cart ID!",
+            error
+        }))
     }
 }

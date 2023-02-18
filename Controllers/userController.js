@@ -13,16 +13,26 @@ function userRegistration(request, response){
     User.findOne({email: input.email}) 
     .then(result =>{
         if(result !== null){
-            return response.send('The email is already exist!');
+            return response.send({
+                "status":"failed",
+                "message": "The email is already exist in our database!"
+            });
         }
         else{
             let newUser =  new User({
                 email: input.email,
-                password:bcrypt.hashSync(input.password, 10)
+                password:bcrypt.hashSync(input.password, 10),
+                fullName:input.fullName,
+                address:input.address,
+                mobileNo:input.mobileNo
             });
 
             newUser.save()
-            .then( ()=>response.send('You are now registered to our website!'))
+            .then( (data)=>response.send({
+                "status": "success",
+                "message": "You are now registered to our website!",
+                data
+            }))
             .catch(error => response.send(error))
         }
     })
@@ -41,22 +51,36 @@ function userLogin(request, response){
     User.findOne({email: input.email})
     .then(result => {
         if(result === null){
-            response.send(`The email ${input.email} is not yet registered in our website!`)
+            response.send({
+                "status":"failed",
+                "message":"This email is not yer registered in our website!"
+            })
         }
         else{
             const isPasswordCorrect = bcrypt.compareSync(input.password, result.password)
 
             if(isPasswordCorrect){
                 // This will generate an object {auth: token-code}
-                response.send({auth: auth.createAccessToken(result)})
+                response.send({
+                    "status":"success",
+                    "message":"Successfully Log in",
+                    auth: auth.createAccessToken(result)
+                })
             }
             else{
-                response.send(`Password is incorrect!`)
+                response.send({
+                    "status":"failed",
+                    "message":"Password is in correct!"
+                })
             }
             
         }
     })
-    .catch(error=> response.send(error))
+    .catch(error=> response.send({
+        "status":"failed",
+        "message":"Error during log in verification! Please try again!",
+        error
+    }))
 }
 // ====================== end of Function for user Login ============================
 
@@ -68,31 +92,53 @@ function adminRegistration(request, response){
     const userData = auth.decode(request.headers.authorization);
 
     if(!userData.isAdmin){
-        response.send("You don't have permission to this page!")
+        response.send({
+            "status":"failed",
+            "message":"You don't have permission to this page!"
+        })
     }
     else{
         User.findOne( {email: input.email})
         .then( result => {
             if (result){
-                let userPermission = result.isAdmin? "Admin" : "User Only"
-                response.send(`${input.email} already exist as: ${userPermission}. Insert new valid email.`)
+            
+                response.send({
+                    "status":"failed",
+                    "message":"Email already exist on the database! Use other email address!",
+                    result
+                })
             }
             else{
                 let newUserAdmin = new User(
                     {
                         email: input.email,
                         password:bcrypt.hashSync(input.password, 10),
-                        isAdmin: true
+                        isAdmin: true,
+                        mobileNo: input.mobileNo,
+                        address:input.address,
+                        fullName: input.fullName
                 
                     }
                 );
 
                 newUserAdmin.save()
-                .then( data => response.send(`${data.email} \n - Admin acount has been created!`))
-                .catch(error => response.send(error))
+                .then( data => response.send({
+                    "status":"success",
+                    "message":"Admin account has been created!",
+                    data
+                }))
+                .catch(error => response.send({
+                    "status":"failed",
+                    "message":"Error during saving!",
+                    error
+                }))
             }
         })
-        .catch(error => response.send(error))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error during log in verification! Please try again!",
+            error
+        }))
     }
 }
 

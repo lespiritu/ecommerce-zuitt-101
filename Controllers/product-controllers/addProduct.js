@@ -13,7 +13,10 @@ module.exports.addProduct = (request, response)=>{
         Product.findOne({productName:input.productName})
         .then(result =>{
             if(result !== null){
-                response.send(`${result.productName} is already in the database!`)
+                response.send({
+                    "status" : "failed",
+                    "message": "The product name is already exist in the database!"
+                })
             }
             else{
                 let newProduct = new Product(
@@ -22,13 +25,18 @@ module.exports.addProduct = (request, response)=>{
                         productDescription:input.productDescription,
                         category:input.category,
                         price:input.price,
-                        stocks:input.stocks
+                        stocks:input.stocks,
+                        images:[input.image1, input.image2, input.image3, input.image4]
                     }
                 )
     
                 // This will add and save the new product to database product collection
                 return newProduct.save()
-                .then(result => response.send(`${result.productName} is now on the products collection`))
+                .then(data => response.send({
+                    "status":"success",
+                    "message":"The product is now added to the database!",
+                    data
+                }))
             }
         })
         .catch(error => response.send(error))

@@ -64,6 +64,7 @@ function userLogin(request, response){
                 response.send({
                     "status":"success",
                     "message":"Successfully Log in",
+                    result,
                     auth: auth.createAccessToken(result)
                 })
             }

@@ -27,12 +27,31 @@ module.exports.getSingleProduct = (request, response)=>{
     if(userData.isAdmin){
         Product.findById(productId)
         .then(result => {
-            response.send(result)
+            if(result !==null){
+                response.send({
+                    "status":'success',
+                    result
+                })
+                
+            }
+            else{
+                response.send({
+                    "status":"failed",
+                    "message":"Invalid Product ID"
+                })
+            }
         })
-        .catch(error => response.send(error))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Invalid Produc ID!",
+            error
+        }))
     }
     else{
-        response.send("You don't have permission to this page!")
+        response.send({
+            "status":"failed",
+            "message":"your not an admin!"
+        })
     }
     
 }

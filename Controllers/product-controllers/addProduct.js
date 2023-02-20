@@ -7,7 +7,11 @@ module.exports.addProduct = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(!userData.isAdmin){
-        response.send(`You are not authorize to add product!`)
+
+        response.send({
+            "status" : "failed",
+            "message": "You are not authorize to add product!"
+        })
     }
     else{
         Product.findOne({productName:input.productName})

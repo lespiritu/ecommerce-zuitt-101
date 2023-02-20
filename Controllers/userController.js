@@ -144,8 +144,25 @@ function adminRegistration(request, response){
 }
 
 
+function getProfile(request, response){
+    // let input = request.body;
+
+    const userData = auth.decode(request.headers.authorization);
+
+    // console.log(userData);
+
+   
+
+   return User.findById(userData._id)
+   .then(result=>{
+      
+        return response.send(result);
+    })
+    .catch(error=>response.send(error))
+}
+
 // exported functions
-module.exports = {userRegistration, userLogin, adminRegistration}
+module.exports = {userRegistration, userLogin, adminRegistration, getProfile}
 
 
 

@@ -6,16 +6,22 @@ module.exports.deactivatedProduct = (request, response) =>{
     const productId = request.params.productId;
 
     if(!userData.isAdmin){
-        response.send("You don't have permission to this page!")
+        response.send({
+            "status" : "failed",
+            "message": "You are not authorize to add product!"
+        })
     }
     else{
         Product.findById(productId)
         .then(data => {
             if( data === null){
-                response.send("Invalid product ID")
+                response.send({
+                    "status" : "failed",
+                    "message": "Invalid Product ID!"
+                })
             }
             else{
-                data.isActive = false;
+                data.isActive = !data.isActive;
                 data.save()
                 .then(updatedData => response.send(updatedData) )
                 .catch(error => response.send(error))

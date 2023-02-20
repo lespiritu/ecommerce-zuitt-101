@@ -15,17 +15,28 @@ module.exports.updateProduct = (request, response)=>{
         category:input.category,
         isActive:input.isActive,
         stocks:input.stocks,
-        price:input.price
+        price:input.price,
+        images:[input.image1, input.image2, input.image3, input.image4]
     }
 
     if(userData.isAdmin){
         Product.findByIdAndUpdate(productId, toUpdateProduct, {new:true})           
-        .then(result => response.send(result))
-        .catch(error=> response.send(error))
+        .then(result => response.send({
+            "status":"success",
+            "message":"Product are successfully update!",
+            result
+        }))
+        .catch(error=> response.send({
+            "status":"failed",
+            error
+        }))
     }
     
     else{
-        response.send(`You are not allowed to update product information!`)
+        response.send({
+            "status":"failed",
+            "message":"You are not allowed to update product information!"
+        })
     }
     
 }

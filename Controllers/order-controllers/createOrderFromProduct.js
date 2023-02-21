@@ -63,12 +63,14 @@ module.exports.createOrderFromProduct =(request, response) =>{
                             } )
                             .catch(error => response.send({
                                 "status":"failed",
+                                "message":"Order could not be save!",
                                 error
                             }))
     
                         })
                         .catch(error => response.send({
                             "status":"failed",
+                            "message":"Order could not be save!",
                             error
                         }))
                     }

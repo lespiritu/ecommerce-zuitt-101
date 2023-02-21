@@ -52,6 +52,9 @@ const orderSchema = new mongoose.Schema(
         isRated:{
             type:Boolean,
             default:false
+        },
+        image:{
+            type:String
         }
     }
 )

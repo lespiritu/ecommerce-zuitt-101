@@ -39,6 +39,7 @@ module.exports.createOrderFromProduct =(request, response) =>{
                                 userEmail: userData.email,
                 
                                 productId: data._id,
+                                image: data.images[0],
                                 productName: data.productName,
                                 productDescription: data.productDescription,
                                 price: data.price,

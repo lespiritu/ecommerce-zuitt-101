@@ -7,12 +7,23 @@ module.exports.showOnGoingOrders = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(userData.isAdmin){
-        response.send("This page is restricted for user only. Admin doesn't have an access!");
+        response.send({
+            "status":"failed",
+            "message":"Admin don't have access to this page!"
+        });
     }
     else{
         Order.find({ $and :[ {userId:userData._id}, {orderStatus: "on going"}] })
-        .then(data => response.send(data))
-        .catch(error => response.send(error))
+        .then(data => response.send({
+            "status":"success",
+            "message":"All orders view",
+            data
+        }))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Could not find the order!",
+            error
+        }))
     }
 }
 

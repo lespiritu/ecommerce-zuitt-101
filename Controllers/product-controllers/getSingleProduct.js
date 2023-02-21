@@ -7,13 +7,23 @@ module.exports.getSingleActiveProduct = (request, response)=>{
     Product.findById(request.params.id)
     .then(result => {
         if(result !== null && result.isActive === true){
-            response.send(result)
+            response.send({
+                "status":"success",
+                result
+            })
         }
         else{
-            response.send(`Doesn't have data from id or product id is incorect!`)
+            response.send({
+                "status":"failed",
+                "message":"Doesn't have data from id or product id is incorect!",
+            })
         }
     })
-    .catch(error=> response.send(`Doesn't have data from id or product id is incorect! ${error}`))
+    .catch(error=> response.send({
+        "status":"failed",
+        "message":"Doesn't have data from id or product id is incorect!",
+        error
+    }))
 }
 
 

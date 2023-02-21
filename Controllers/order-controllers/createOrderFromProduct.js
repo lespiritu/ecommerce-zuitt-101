@@ -8,19 +8,28 @@ module.exports.createOrderFromProduct =(request, response) =>{
     const input = request.body;
     
     if(userData.isAdmin){
-        response.send("This page is restricted for user only. Admin doesn't have an access!")
+        response.send({
+            "status": "failed",
+            "message": "Admin account cannot make an order!"
+        })
     }
     else{
 
         Product.findById(productId)
         .then(data => {
             if(data === null){
-                response.send("Invalid product ID")
+                response.send({
+                    "status":"failed",
+                    "message":"Invalid product ID"
+                })
             }
             else{
 
                 if(!data.isActive){
-                    response.send("This product is not yet active or no available stocks right now!")
+                    response.send({
+                        "status":"failed",
+                        "message": "This product is not yet active!"
+                    })
                 }
                 else{
                     if(input.quantity && data.stocks >= input.quantity){
@@ -41,30 +50,50 @@ module.exports.createOrderFromProduct =(request, response) =>{
                         
                         
                         newProduct.save()
-                        .then(saveData => {
+                        .then(result => {
     
                             data.stocks -= input.quantity;
                             data.save()
                             .then(()=>{
-                                response.send(`${saveData.productName} is now on going process. Thank you for your order!`)
+                                response.send({
+                                    "status":"success",
+                                    "message":"Order successfully created. Thank you for your order!",
+                                    result
+                                })
                             } )
-                            .catch(error => response.send(error))
+                            .catch(error => response.send({
+                                "status":"failed",
+                                error
+                            }))
     
                         })
-                        .catch(error => response.send(error))
+                        .catch(error => response.send({
+                            "status":"failed",
+                            error
+                        }))
                     }
                     else if(!input.quantity){
-                        response.send(`Please input the value of the quantity. Thank you!`)
+                        response.send({
+                            "status":"failed",
+                            "message":"Please input the value of the quantity. Thank you!"
+                        })
                     }
                     else{
-                        response.send(`We don't have enough stock for your order. Our stocks is:${data.stocks} and your order is:${input.quantity}`)
+                        response.send({
+                            "status":"failed",
+                            "message":"We don't have enough stocks for your order!"
+                        })
                     }
                 }
                 
                 
             }
         })
-        .catch(error=> response.send(error));
+        .catch(error=> response.send({
+            "status":"failed",
+            "message":"Invalid Product Id!",
+            error
+        }));
             
     }
 }

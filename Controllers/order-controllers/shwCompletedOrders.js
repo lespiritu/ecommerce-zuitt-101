@@ -5,18 +5,32 @@ module.exports.showCompleteOrder = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(userData.isAdmin){
-        response.send("This page is restricted for user only. Admin doesn't have an access!");
+        response.send({
+            "status":"failed",
+            "message":"Admin don't have permision in this page!"
+        });
     }
     else{
         Order.find( { $and :[{userId:userData._id}, {orderStatus:"recieved"}]})
         .then(data => {
             if (data === null){
-                response.send("This page is restricted for user only. Admin doesn't have an access!");
+                response.send({
+                    "status":"failed",
+                    "message":"Error! Could be use ID not found!"
+                });
             }
             else{
-                response.send(data)
+                response.send({
+                    "status":"success",
+                    "message":"All completed orders",
+                    data
+                })
             }
         })
-        .catch(error=> response.send(error))
+        .catch(error=> response.send({
+                "status":"failed",
+                "message":"Error! During finding data!",
+                error
+        }))
     }
 }

@@ -40,17 +40,21 @@ module.exports.addToCart = (request, response)=>{
                 .then(result => {
                     if(result === null){
                         response.send("Invalid productID!")
+                        
                     }
             
                     else{
+                        
                         let newProductOnCart = new Cart(
                             {   
-
+                                
                                 userId: userData._id,
                                 userEmail: userData.email,
-
+                                
                                 productId: result._id,
                                 productName: result.productName,
+                                image:result.images[0],
+                               
                                 productDescription: result.productDescription,
                                 price: result.price,
                                 quantity: input.quantity? input.quantity : 1,

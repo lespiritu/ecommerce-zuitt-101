@@ -39,7 +39,11 @@ const cartSchema = new mongoose.Schema(
             totalAmount:{
                 type:Number,
                 required:[true, 'total price is required!']
+            },
+            image:{
+                type:String
             }
+
 
         
 

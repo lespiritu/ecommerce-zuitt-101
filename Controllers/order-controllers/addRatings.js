@@ -30,14 +30,23 @@ module.exports.addRating = (request, response)=>{
                     else{
                         
                         if(Orderdata.isRated){
-                            return response.send("You already rated this product for this order!")
+                            return response.send({
+                                "status":"failed",
+                                "message":"You already rated this product!",
+                            })
                         }
                         else{
                             if( input.rating > 5){
-                                return  response.send("Please input 1 to 5 rating only. Thank you!")
+                                return  response.send({
+                                    "status":"failed",
+                                    "message":"Please input 1 to 5 rating only. Thank you!",
+                                })
                               }
                               else if(input.rating < 1){
-                                  return  response.send("Please input 1 to 5 rating only. Thank you!")
+                                  return  response.send({
+                                    "status":"failed",
+                                    "message":"Please input 1 to 5 rating only. Thank you!",
+                                  })
                               }
                               else{
                                   Product.findById(Orderdata.productId)
@@ -48,12 +57,28 @@ module.exports.addRating = (request, response)=>{
                                       .then(newProductData=> {
                                             Orderdata.isRated = true;
                                             Orderdata.save()
-                                            .then( ()=> response.send(`Thank you for your feeback! \n ${newProductData}`))
-                                            .catch(error => response.send(error))
+                                            .then( ()=> response.send({
+                                                "status":"success",
+                                                "message":"Successfully Rated Order!",
+                                                newProductData
+                                            }))
+                                            .catch(error => response.send({
+                                                "status":"failed",
+                                                "message":"Error",
+                                                error
+                                            }))
                                       })
-                                      .catch(error => response.send(error))
+                                      .catch(error => response.send({
+                                            "status":"failed",
+                                            "message":"Error",
+                                            error
+                                      }))
                                   })
-                                  .catch(error => response.send(error))
+                                  .catch(error => response.send({
+                                            "status":"failed",
+                                            "message":"Error",
+                                            error
+                                  }))
                               }
                         } 
                     }

@@ -7,13 +7,24 @@ module.exports.showOrdersAdmin = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(!userData.isAdmin){
-        response.send(`You are not authorize to this page!`)
+        response.send({
+            "status":"failed",
+            "message":"You are not authorize to this page!"
+        })
     }
     else{
 
         Order.find({})
-        .then(data => response.send(data))
-        .catch(error => response.send(error))
+        .then(data => response.send({
+            "status":"success",
+            "message":"All Orders view",
+            data
+        }))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }))
     }
 }
 
@@ -22,13 +33,24 @@ module.exports.showOrdersCompleted = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(!userData.isAdmin){
-        response.send(`You are not authorize to this page!`)
+        response.send({
+            "status":"failed",
+            "message":"You are not authorize to this page!"
+        })
     }
     else{
 
         Order.find({orderStatus:"recieved"})
-        .then(data => response.send(data))
-        .catch(error => response.send(error))
+        .then(data => response.send({
+            "status":"success",
+            "message":"All Complete Orders View!",
+            data
+        }))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }))
     }
 }
 
@@ -38,13 +60,24 @@ module.exports.showOnGoingOrdersAdmin = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(!userData.isAdmin){
-        response.send(`You are not authorize to this page!`)
+        response.send({
+            "status":"failed",
+            "message":"You are not authorize to this page!"
+        })
     }
     else{
 
         Order.find({orderStatus: "on going"})
-        .then(data => response.send(data))
-        .catch(error => response.send(error))
+        .then(data => response.send({
+            "status":"success",
+            "message":"All On Going Orders View!",
+            data
+        }))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }))
     }
 }
 
@@ -57,18 +90,32 @@ module.exports.showSingleOrderAdmin = (request, response)=>{
     const orderId = request.params.orderId;
 
     if(!userData.isAdmin){
-        response.send("You don't have access to this page!");
+        response.send({
+            "status":"failed",
+            "message":"You are not authorize to this page!"
+        });
     }
     else{
         Order.findById(orderId)
         .then( data => {
             if (data === null){
-                response.send("Invalid Order ID")
+                response.send({
+                    "status":"failed",
+                    "message":"Invalid Order ID!"
+                })
             }
             else{
-                response.send(data)
+                response.send({
+                    "status":"success",
+                    "message":"View Single Order",
+                    data
+                })
             }
         })
-        .catch(error => response.send(error))
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }))
     }
 }   

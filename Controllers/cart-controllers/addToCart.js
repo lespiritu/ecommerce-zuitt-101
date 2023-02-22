@@ -11,7 +11,10 @@ module.exports.addToCart = (request, response)=>{
     const input = request.body;
 
     if(userData.isAdmin){
-        response.send("This page is restricted for users only. Admin is not allowed!")
+        response.send({
+            "status":"failed",
+            "message":"Admin cannot add to cart a product"
+        })
     }
     else{
 
@@ -21,8 +24,16 @@ module.exports.addToCart = (request, response)=>{
                data.totalAmount = data.price * data.quantity;
                data.save()
 
-               .then(newData =>response.send(newData) )
-               .catch(error => respond.send(error))
+               .then(result =>response.send({
+                    "status":"success",
+                    "message":"Product is already in the cart. It will just add the quantity",
+                    result
+               }) )
+               .catch(error => respond.send({
+                    "status":"failed",
+                    "message":"Error",
+                    error
+               }))
             }
             else{
                 Product.findById(productId)
@@ -53,15 +64,31 @@ module.exports.addToCart = (request, response)=>{
 
                         // This will add and save the new product in the cart to database cart collection
                         return newProductOnCart.save()
-                        .then(result => response.send(`${result.productName} is now on your cart`))
-                        .catch(error=>response.send(error))
+                        .then(result => response.send({
+                            "status":"success",
+                            "message":"Product successfully added to the cart!",
+                            result
+                        }))
+                        .catch(error=>response.send({
+                            "status":"failed",
+                            "message":"Error",
+                            error
+                        }))
                     }
                 })
-                .catch(error => response.send(error))
+                .catch(error => response.send({
+                    "status":"failed",
+                    "message":"Error",
+                    error
+                }))
             }
         })
 
-        .catch(error=> response.send(error))
+        .catch(error=> response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }))
 
         
     }

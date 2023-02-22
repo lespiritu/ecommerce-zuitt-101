@@ -8,27 +8,39 @@ module.exports.createOrderFromCart = (request, response)=>{
     const cartId = request.params.cartId;
 
     if(userData.isAdmin){
-        response.send("This page is restricted for user only. Admin doesn't have an access!")
+        response.send({
+            "status":"failed",
+            "message":"Admin doesn't have an access in add to cart!"
+        })
     }
     else{
 
         Cart.findById(cartId)
         .then( data => {
             if(data === null){
-                response.send("Invalid cartId")
+                response.send({
+                    "status":"failed",
+                    "message":"Invalid Cart ID"
+                })
             }
 
             
             else{   
 
                 if(data.userId !== userData._id){
-                    response.send("You don't have permission to this page!")
+                    response.send({
+                        "status":"failed",
+                        "message":"You don't have permission to this page!"
+                    })
                 }
                 else{
                     Product.findById(data.productId)
                     .then( result => {
                         if(!result.isActive){
-                            response.send("This product is not yet active or no available stocks right now!")
+                            response.send({
+                                "status":"failed",
+                                "message":"This product is not yet active or no available stocks right now!"
+                            })
                         }
                         else{
                             if (result.stocks >= data.quantity){
@@ -41,6 +53,7 @@ module.exports.createOrderFromCart = (request, response)=>{
                         
                                         productId: data.productId,
                                         productName: data.productName,
+                                        image: data.image,
                                         productDescription: data.productDescription,
                                         price: data.price,
                                         quantity: data.quantity,
@@ -52,22 +65,43 @@ module.exports.createOrderFromCart = (request, response)=>{
                                 result.save()
                                 .then(
                                     //This will delete the data from a cart.
-                                    data.delete()).catch(error=>response.send(error))
+                                    data.delete())
+                                    .catch(error=>response.send({
+                                        "status":"failed",
+                                        "message":"Error",
+                                        error
+                                    }))
                                 
                 
                                 .then( ()=> {
                 
                                     // This will save new Order to the orders collection
                                     newOrder.save()
-                                    .then(saveData => response.send(`${saveData.productName} is now on going process. Thank you for your order!`))
-                                    .catch(error => response.send(error))
+                                    .then(result => response.send({
+                                        "status":"success",
+                                        "message":"Successfully Added Order from cart!",
+                                        result
+                                    }))
+                                    .catch(error => response.send({
+                                        "status":"failed",
+                                        "message":"Error",
+                                        error
+                                    }))
                                 }
                                 )
-                                .catch(error => response.send(error))
+                                .catch(error => response.send({
+                                    "status":"failed",
+                                    "message":"Error",
+                                    error
+                                }))
     
                             }
                             else {
-                                response.send(`We don't have enough stock for your order. Our stocks is:${result.stocks} and your order is:${data.quantity}`)
+                                response.send({
+                                    "status":"failed",
+                                    "message":"We don't have enought stock for your order!",
+                          
+                                })
                             }
                         }
 
@@ -75,13 +109,21 @@ module.exports.createOrderFromCart = (request, response)=>{
                         
             
                     })
-                    .catch(error => response.send(error));
+                    .catch(error => response.send({
+                        "status":"failed",
+                        "message":"Error",
+                        error
+                    }));
                 }
                   
 
             }
         })
-        .catch(error => response.send(error));
+        .catch(error => response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }));
 
         
 

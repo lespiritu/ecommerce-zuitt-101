@@ -8,11 +8,22 @@ module.exports.viewUserCart = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
 
     if(userData.isAdmin){
-        response.send("This page is restricted for user only. Admin doesn't have an access!")
+        response.send({
+            "status":"failed",
+            "message":"Admin connot view Cart!"
+        })
     }
     else{
         Cart.find({userId:userData._id})
-        .then(result => response.send(result))
-        .catch(error=> response.send(error))
+        .then(result => response.send({
+            "status":"success",
+            "message":"View all cart",
+            result
+        }))
+        .catch(error=> response.send({
+            "status":"failed",
+            "message":"Error",
+            error
+        }))
     }
 }

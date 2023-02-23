@@ -6,6 +6,7 @@ const Product = require('../../Models/productsSchema.js');
 module.exports.createOrderFromCart = (request, response)=>{
     const userData = auth.decode(request.headers.authorization);
     const cartId = request.params.cartId;
+    const input = request.body;
 
     if(userData.isAdmin){
         response.send({
@@ -56,8 +57,8 @@ module.exports.createOrderFromCart = (request, response)=>{
                                         image: data.image,
                                         productDescription: data.productDescription,
                                         price: data.price,
-                                        quantity: data.quantity,
-                                        totalAmount:data.totalAmount
+                                        quantity: input.quantity,
+                                        totalAmount:input.quantity * data.price
                                     }
                                 );
     
